@@ -1,0 +1,191 @@
+CREATE TABLE Publisher ( Name varchar(200) PRIMARY KEY, Address varchar(400), Phone varchar(10));
+
+CREATE TABLE Book ( Book_id int PRIMARY KEY, Title varchar(200),Publisher_Name varchar(200), Pub_Year int, FOREIGN KEY (Publisher_Name)REFERENCES Publisher(Name) ON DELETE SET NULL );
+
+CREATE TABLE Book_Authors ( Book_id int NOT NULL, Author_Name varchar(200) NOT NULL, PRIMARY KEY (Book_id, Author_name), FOREIGN KEY(Book_id) REFERENCES Book(Book_id) ON DELETE CASCADE );
+
+CREATE TABLE Library_Branch ( Branch_id int PRIMARY KEY, Branch_name varchar(200) NOT NULL, Address varchar(400) );
+
+CREATE TABLE Book_Copies ( Book_id int NOT NULL, Branch_id int NOT NULL, No_of_copies int DEFAULT 1, PRIMARY KEY (Book_id, Branch_id),FOREIGN KEY (Book_id) REFERENCES Book(Book_id) ON DELETE CASCADE,
+
+FOREIGN KEY (Branch_id) REFERENCES Library_Branch(Branch_id) ON DELETE CASCADE);
+
+CREATE TABLE Borrower ( Card_no int PRIMARY KEY, Name varchar(200) NOT NULL );
+
+CREATE TABLE Book_Lending ( Book_id int NOT NULL, Branch_id int NOT NULL, Card_no int NOT NULL, Date_out Date, Due_date Date, PRIMARY KEY(Book_id, Branch_id, Card_no), FOREIGN KEY (Book_id) REFERENCES
+
+Book(Book_id) ON DELETE CASCADE, FOREIGN KEY (Branch_id)REFERENCES Library_Branch(Branch_id) ON DELETE CASCADE, FOREIGN KEY (Card_no) REFERENCES Borrower(Card_no) ON DELETE CASCADE );
+
+
+
+INSERT INTO Publisher (`Name`, `Address`, `Phone`) VALUES ('Pearson', 'New Delhi', '8976789543');
+
+INSERT INTO Publisher (`Name`, `Address`, `Phone`) VALUES ('PHI', 'New Delhi', '9876785333');
+
+INSERT INTO Publisher (`Name`, `Address`, `Phone`) VALUES ('Tata McGrawHill', 'New Delhi', '9876785432');
+
+INSERT INTO Publisher (`Name`, `Address`, `Phone`) VALUES ('Technical Publications', 'Pune', '9823451678');
+
+INSERT INTO Publisher (`Name`, `Address`, `Phone`) VALUES ('Universities Press', 'Hyderabad', '9123214566'); 
+
+
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('1', 'Web Engineering', 'Tata McGraw-Hill', '2008');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('2', 'Unix System Programming', 'Technical Publications', '2013');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('3', 'Design of UNIX OS', 'PHI', '2008');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('4', 'Formal Languages & Automata Theory', 'Technical Publications', '2012');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('5', 'Fundamentals of DS in C', 'Universities Press', '2008');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('6', 'Introduction to Automata Theory', 'Pearson', '2006');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('7', 'Operating Systems', 'Pearson', '2003');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('8', 'OOAD', 'Tata McGraw-Hill', '2012');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('9', 'OOAD', 'Universities Press', '2012');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('10', 'OS', 'Technical Publications', '2012');
+
+INSERT INTO Book (`Book_id`, `Title`, `Publisher_Name`, `Pub_Year`) VALUES('11', 'PCD', 'Pearson', '2013'); 
+
+
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('1', 'Roger S Pressman');
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES('2', 'I A Dhotre');
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('3', 'Maurice J Bach');
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('4', 'A A Puntambekar'); 
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('5', 'Horowitz');
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('6','Hopcroft');
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('7', 'Deitel');
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('8', 'SimonBennett'); 
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('9','Brahma Dathan'); 
+
+INSERT INTO Book_Authors (`Book_id`, `Author_Name`) VALUES ('10', 'I A Dhotre');
+
+
+
+INSERT INTO Library_Branch (`Branch_id`, `Branch_name`, `Address`) VALUES('101', 'BranchA', 'Nagawara');
+
+INSERT INTO Library_Branch (`Branch_id`, `Branch_name`, `Address`) VALUES('102', 'BranchB', 'KG Halli'); 
+
+INSERT INTO Library_Branch (`Branch_id`, `Branch_name`, `Address`) VALUES('103', 'BranchC', 'Indira Nagar');
+
+INSERT INTO Library_Branch (`Branch_id`, `Branch_name`, `Address`) VALUES('104', 'BranchD', 'M G Road');
+
+INSERT INTO Library_Branch (`Branch_id`, `Branch_name`, `Address`) VALUES('105', 'BranchE', 'K R Circle'); 
+
+
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('1', '101', '2');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('1', '104', '3');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('2', '102', '10');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('3', '103', '5');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('4', '105', '6');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('5', '101', '7');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('6', '102', '10');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('6', '105', '8');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('7', '104', '12');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('8', '103', '15');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('9', '102', '6');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('10', '103', '2');
+
+INSERT INTO Book_Copies (`Book_id`, `Branch_id`, `No_of_copies`) VALUES('10', '101', '4');
+
+
+
+INSERT INTO Borrower (`Card_no`, `Name`) VALUES ('201', 'John Smith');
+
+INSERT INTO Borrower (`Card_no`, `Name`) VALUES ('202', 'Franklin');
+
+INSERT INTO Borrower (`Card_no`, `Name`) VALUES ('203', 'Joyce');
+
+INSERT INTO Borrower (`Card_no`, `Name`) VALUES ('204', 'James');
+
+INSERT INTO Borrower (`Card_no`, `Name`) VALUES ('205', 'Rose'); 
+
+
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('1', '101', '201', '2017-07-26', '2017-08-04');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('2', '102', '201', '2017-01-17', '2017-07-27');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('5', '101', '202', '2017-04-11', '2017-04-21');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('6', '102', '204', '2017-03-06', '2017-07-16');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('7', '104', '203', '2016-12-05', '2016-12-15');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('10', '101', '205', '2017-07-04', '2017-07-14');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('4', '105', '202', '2017-01-02', '2017-07-12');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('8', '103', '201', '2017-05-09', '2017-05-19');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('3', '103', '203', '2017-06-01', '2017-06-10');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('10', '103', '205', '2017-02-01', '2017-07-10');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('6', '105', '204', '2016-11-02', '2016-11-12');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('1', '104', '202', '2017-02-10', '2017-02-20');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('9', '102', '201', '2017-04-01', '2017-04-11');
+
+INSERT INTO Book_Lending (`Book_id`, `Branch_id`, `Card_no`, `Date_out`,`Due_date`) VALUES ('2', '102', '202', '2017-05-02', '2017-05-12');
+
+
+
+select c.Branch_id,c.Book_id,b.Title,b.Publisher_Name,a.Author_Name, c.No_of_copies
+
+FROM Book_Copies c, Book b, Book_Authors a,Library_Branch l where
+
+b.book_id=c.book_id and a.book_id=b.book_id and l.branch_id=c.Branch_id;
+
+
+
+SELECT b.Card_no,b.Name FROM Book_Lending l,Borrower b where
+
+b.Card_no=l.Card_no and date_out between '2017-01-01' and '2017-07-01' group by
+
+l.Card_no having count(l.Card_no)>3;
+
+
+
+delete from Book where Book_id=11; select * from Book;
+
+
+
+select * from Book where Pub_Year = '2012';
+
+
+
+create view Books as select c.Book_id,b.Title,a.Author_Name,b.Publisher_Name,b.Pub_Year,
+
+sum(No_of_copies) from Book b,Book_Authors a,Book_Copies c where
+
+c.Book_id=a.Book_id and a.Book_id=b.Book_id group by Book_id; 
+
+select * from Book;
